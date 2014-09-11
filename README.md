@@ -8,7 +8,7 @@ Please check [this blog post](http://www.rocketscream.com/blog/2011/07/04/lightw
 * Version: 1.31 by Felix Rusu of LowPowerLab.com
 * Forked [from here](https://github.com/rocketscream/Low-Power) (v1.30)
 * Date: 11-09-2014
-* Company: Rocket Scream Electronics (www.rocketscream.com)
+* Original by [Rocket Scream Electronics](www.rocketscream.com)
 
 ##License
 Passing through CC-BY-SA license:
