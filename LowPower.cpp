@@ -1,9 +1,12 @@
 /*******************************************************************************
 * LowPower Library
-* Version: 1.30
-* Date: 22-05-2013
+* Version: 1.31 (forked from https://github.com/rocketscream/Low-Power v1.30)
+* Date: 11-09-2014
 * Company: Rocket Scream Electronics
 * Website: www.rocketscream.com
+*
+* Version 1.31 by Felix Rusu of LowPowerLab.com
+* Passing through CC-BY-SA license.
 *
 * This is a lightweight low power library for Arduino. Please check our wiki 
 * (www.rocketscream.com/wiki) for more information on using this piece of 
@@ -14,6 +17,8 @@
 *
 * Revision  Description
 * ========  ===========
+* 1.31    Added support for ATMega1284P
+            Tested to work in IDE 1.0.5
 * 1.30			Added support for ATMega168, ATMega2560, ATMega1280 & ATMega32U4.
 *						Tested to work with Arduino IDE 1.0.1 - 1.0.4.
 * 1.20			Remove typo error in idle method for checking whether Timer 0 was 
@@ -31,7 +36,7 @@
 #include "LowPower.h"
 
 // Only Pico Power devices can change BOD settings through software
-#if defined __AVR_ATmega328P__
+#if defined (__AVR_ATmega328P__) || defined (__AVR_ATmega1284P__)
 #ifndef sleep_bod_disable
 #define sleep_bod_disable() 										\
 do { 																\
@@ -61,7 +66,7 @@ do { 						\
 } while (0);
 
 // Only Pico Power devices can change BOD settings through software
-#if defined __AVR_ATmega328P__
+#if defined (__AVR_ATmega328P__) || defined (__AVR_ATmega1284P__)
 #define	lowPowerBodOff(mode)\
 do { 						\
       set_sleep_mode(mode); \
@@ -142,7 +147,7 @@ do { 						\
 *				(b) TWI_ON - Leave TWI module in its default state
 *
 *******************************************************************************/
-#if defined (__AVR_ATmega328P__) || defined (__AVR_ATmega168__)
+#if defined (__AVR_ATmega328P__) || defined (__AVR_ATmega168__) || defined (__AVR_ATmega1284P__)
 void	LowPowerClass::idle(period_t period, adc_t adc, timer2_t timer2, 
 							timer1_t timer1, timer0_t timer0,
 							spi_t spi, usart0_t usart0,	twi_t twi)
@@ -587,7 +592,7 @@ void	LowPowerClass::powerDown(period_t period, adc_t adc, bod_t bod)
 	}
 	if (bod == BOD_OFF)	
 	{
-		#if defined __AVR_ATmega328P__
+		#if defined (__AVR_ATmega328P__) || defined (__AVR_ATmega1284P__)
 			lowPowerBodOff(SLEEP_MODE_PWR_DOWN);
 		#else
 			lowPowerBodOn(SLEEP_MODE_PWR_DOWN);
@@ -674,7 +679,7 @@ void	LowPowerClass::powerSave(period_t period, adc_t adc, bod_t bod,
 	
 	if (bod == BOD_OFF)	
 	{
-		#if defined __AVR_ATmega328P__
+		#if defined (__AVR_ATmega328P__) || defined (__AVR_ATmega1284P__)
 			lowPowerBodOff(SLEEP_MODE_PWR_SAVE);
 		#else
 			lowPowerBodOn(SLEEP_MODE_PWR_SAVE);
@@ -739,7 +744,7 @@ void	LowPowerClass::powerStandby(period_t period, adc_t adc, bod_t bod)
 	
 	if (bod == BOD_OFF)	
 	{
-		#if defined __AVR_ATmega328P__
+		#if defined (__AVR_ATmega328P__) || defined (__AVR_ATmega1284P__)
 			lowPowerBodOff(SLEEP_MODE_STANDBY);
 		#else
 			lowPowerBodOn(SLEEP_MODE_STANDBY);
@@ -817,7 +822,7 @@ void	LowPowerClass::powerExtStandby(period_t period, adc_t adc, bod_t bod,
 	}
 	if (bod == BOD_OFF)	
 	{
-		#if defined __AVR_ATmega328P__
+		#if defined (__AVR_ATmega328P__) || defined (__AVR_ATmega1284P__)
 			lowPowerBodOff(SLEEP_MODE_EXT_STANDBY);
 		#else
 			lowPowerBodOn(SLEEP_MODE_EXT_STANDBY);
@@ -835,7 +840,7 @@ void	LowPowerClass::powerExtStandby(period_t period, adc_t adc, bod_t bod,
 	{
 		if (clockSource & CS22) TCCR2B |= (1 << CS22);
 		if (clockSource & CS21) TCCR2B |= (1 << CS21);
-		if (clockSource & CS20) TCCR2B |= (1 << CS20);	
+		if (clockSource & CS20) TCCR2B |= (1 << CS20);
 	}
 	#endif
 }

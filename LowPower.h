@@ -109,7 +109,7 @@ enum usb_t
 class LowPowerClass
 {
 	public:
-		#if defined (__AVR_ATmega328P__) || defined (__AVR_ATmega168__) 
+		#if defined (__AVR_ATmega328P__) || defined (__AVR_ATmega168__) || defined (__AVR_ATmega1284P__)
 			void	idle(period_t period, adc_t adc, timer2_t timer2, 
 								 timer1_t timer1, timer0_t timer0, spi_t spi,
 					       usart0_t usart0, twi_t twi);
@@ -124,7 +124,7 @@ class LowPowerClass
 								 timer1_t timer1, timer0_t timer0, spi_t spi,
 					       usart1_t usart1, twi_t twi, usb_t usb);		
 		#else
-			#error "Please ensure chosen MCU is either 328P, 32U4 or 2560."
+			#error "Please ensure chosen MCU is either 168, 328P, 32U4, 1284P, 1280 or 2560."
 		#endif
 		void	adcNoiseReduction(period_t period, adc_t adc, timer2_t timer2);
 		void	powerDown(period_t period, adc_t adc, bod_t bod);
