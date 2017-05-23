@@ -113,24 +113,40 @@ class LowPowerClass
 			void	idle(period_t period, adc_t adc, timer2_t timer2, 
 								 timer1_t timer1, timer0_t timer0, spi_t spi,
 					       usart0_t usart0, twi_t twi);
+			void	idleWait(period_t period, adc_t adc, timer2_t timer2, 
+								 timer1_t timer1, timer0_t timer0, spi_t spi,
+					       usart0_t usart0, twi_t twi, bool wait);
 		#elif defined __AVR_ATmega2560__
 			void	idle(period_t period, adc_t adc, timer5_t timer5, 
 								 timer4_t timer4, timer3_t timer3, timer2_t timer2,
 			   				 timer1_t timer1, timer0_t timer0, spi_t spi,
 					       usart3_t usart3, usart2_t usart2, usart1_t usart1, 
 								 usart0_t usart0, twi_t twi);
+			void	idleWait(period_t period, adc_t adc, timer5_t timer5, 
+								 timer4_t timer4, timer3_t timer3, timer2_t timer2,
+			   				 timer1_t timer1, timer0_t timer0, spi_t spi,
+					       usart3_t usart3, usart2_t usart2, usart1_t usart1, 
+								 usart0_t usart0, twi_t twi, bool wait);
 		#elif defined __AVR_ATmega32U4__	
 			void	idle(period_t period, adc_t adc, timer4_t timer4, timer3_t timer3, 
 								 timer1_t timer1, timer0_t timer0, spi_t spi,
 					       usart1_t usart1, twi_t twi, usb_t usb);		
+			void	idleWait(period_t period, adc_t adc, timer4_t timer4, timer3_t timer3, 
+								 timer1_t timer1, timer0_t timer0, spi_t spi,
+					       usart1_t usart1, twi_t twi, usb_t usb, bool wait);
 		#else
 			#error "Please ensure chosen MCU is either 168, 328P, 32U4, 1284P, 1280 or 2560."
 		#endif
 		void	adcNoiseReduction(period_t period, adc_t adc, timer2_t timer2) __attribute__((optimize("-O1")));
+		void	adcNoiseReductionWait(period_t period, adc_t adc, timer2_t timer2, bool wait) __attribute__((optimize("-O1")));
 		void	powerDown(period_t period, adc_t adc, bod_t bod) __attribute__((optimize("-O1")));
+		void	powerDownWait(period_t period, adc_t adc, bod_t bod, bool wait) __attribute__((optimize("-O1")));
 		void	powerSave(period_t period, adc_t adc, bod_t bod, timer2_t timer2) __attribute__((optimize("-O1")));
+		void	powerSaveWait(period_t period, adc_t adc, bod_t bod, timer2_t timer2, bool wait) __attribute__((optimize("-O1")));
 		void	powerStandby(period_t period, adc_t adc, bod_t bod) __attribute__((optimize("-O1")));
+		void	powerStandbyWait(period_t period, adc_t adc, bod_t bod, bool wait) __attribute__((optimize("-O1")));
 		void	powerExtStandby(period_t period, adc_t adc, bod_t bod, timer2_t timer2) __attribute__((optimize("-O1")));
+		void	powerExtStandbyWait(period_t period, adc_t adc, bod_t bod, timer2_t timer2, bool wait) __attribute__((optimize("-O1")));
 };
 
 extern LowPowerClass LowPower;
